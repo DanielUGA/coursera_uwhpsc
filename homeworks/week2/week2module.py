@@ -137,20 +137,34 @@ def poly_interp(xi,yi):
   size = len(xi)
   
   #define A in terms of xi points, bacause we want Ac=B: solve(A,B)
-  A = numpy.ones(size)
-  for i in range(2,size+1):
-    A = numpy.vstack([A,xi**i])
-   # print "Matriz A " ,A , " em size ", size
-  A = A.T
-  #print "A transposta, ", A
+  A = numpy.vstack([xi**j for j in range(size)]).T
   B = yi
-  #print "Matrix B ", B
   c = solve(A,B)
   print "The coefficients are: "
   print c
   return c
 
-#def plot_ploy():
+def plot_poly(xi,yi):
+  """
+  Generate plot
+  """
+  c = poly_interp(xi,yi)
+  x = numpy.linspace(xi.min() - 5 ,xi.max() + 5 , 2000)
+  #Honer Rule
+  n = len(c)
+  y = c[n-1]
+  for j in range(n-1, 0, -1):
+    y = y*x + c[j-1]
+    print y
+  #generate figure
+  plt.figure(1)
+  plt.clf()
+  plt.plot(x,y,'b-')
+  #adding points
+  plt.plot(xi,yi,'ro')
+  plt.ylim(yi.min() - 5 ,yi.max() + 5)
+  plt.title("Data points and interpolation polynomial")
+  plt.savefig('poly.png')
 
 def test_poly1():
   xi = numpy.array([-1.,  0.,  2., 3.])
@@ -163,10 +177,70 @@ def test_poly1():
   assert numpy.allclose(c,c_true), \
     "Incorrect result, c found = %s, expexted = %s" % (c,c_true)
 
+def test_poly2():
+    """
+    Test code, no return value or exception if test runs properly.
+    Same points as test_cubic1.
+    """
+    # Generate a test by specifying c_true first:
+    c_true = numpy.array([7., -2., -3., 1.])
+    # Points to interpolate:
+    xi = numpy.array([-1.,  0.,  1., 2.])
+    # Function values to interpolate:
+    # Use Horner's rule:
+    n = len(xi)
+    yi = c_true[n-1]
+    for j in range(n-1, 0, -1):
+        yi = yi*xi + c_true[j-1]
+
+    # Now interpolate and check we get c_true back again.
+    c = poly_interp(xi,yi)
+    print "xi ",xi
+    print "yi ",yi
+    print "c =      ", c
+    print "c_true = ", c_true
+    # test that all elements have small error:
+    assert numpy.allclose(c, c_true), \
+        "Incorrect result, c = %s, Expected: c = %s" % (c,c_true)
+
+    # Also produce plot:
+    plot_poly(xi,yi)
+    
+
+def test_poly3():
+    """
+    Test code, no return value or exception if test runs properly.
+    Test with 5 points (quartic interpolating function).
+    """
+    # Generate a test by specifying c_true first:
+    c_true = numpy.array([0., -6., 11., -6., 1.])
+    # Points to interpolate:
+    xi = numpy.array([-1.,  0.,  1., 2., 4.])
+    # Function values to interpolate:
+    # Use Horner's rule:
+    n = len(xi)
+    yi = c_true[n-1]
+    for j in range(n-1, 0, -1):
+        yi = yi*xi + c_true[j-1]
+
+    # Now interpolate and check we get c_true back again.
+    c = poly_interp(xi,yi)
+
+    print "c =      ", c
+    print "c_true = ", c_true
+    # test that all elements have small error:
+    assert numpy.allclose(c, c_true), \
+        "Incorrect result, c = %s, Expected: c = %s" % (c,c_true)
+
+    # Also produce plot:
+    plot_poly(xi,yi)
+
+
 if __name__=="__main__":
   #This piece only is executed when we call this file as script
   #python hw2module.py
   print "Running test..."
-  test_quad1()
-  test_cubic1()
+  #test_quad1()
+  #test_cubic1()
+  test_poly1()
 
