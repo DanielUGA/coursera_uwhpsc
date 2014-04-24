@@ -29,7 +29,8 @@ repository.
 
 import os,sys
 
-debug_mode = True
+#debug_mode = True
+debug_mode = False
 
 if debug_mode:
     output_file = sys.stdout  # send output to screen
@@ -38,7 +39,7 @@ else:
     output_file = open("test1output.txt","w")
     sys.stdout = output_file
 
-print "Code run by **INSERT YOUR NAME HERE**"
+print "Code run by **Thiago**"
 
 UWHPSC = os.environ.get('UWHPSC','** not set **')
 print "Environment variable UWHPSC is %s"  % UWHPSC

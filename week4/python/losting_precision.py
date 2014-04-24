@@ -1,3 +1,4 @@
+#"Catastrophic cancellation
 from numpy import pi
 print "Pi vale",pi
 
