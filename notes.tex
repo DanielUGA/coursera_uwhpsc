@@ -34,3 +34,20 @@ new-list = list(myoldlist). To verify position on memory on python: id(mylist).
 \end{itemize}
 
 The idea is hide latency and improve throughput
+
+\subsection{Parallel Computing}
+OpemMP: shared memory \\
+MPI: distributed memory 
+
+Amdahl\' Law: only part of computation can be parallelized.
+
+Example: Suppose 10\% of the computation is inherently sequential and the 90\% is parallelized, how much faster could the computation run on many processors? at a factor of 10.
+
+Law: $1/S$ of the computation is inherently sequential and the $(1-1/S)$ is parallelized, how much faster could the computation run on many processors? the can gain at most a factor of S, no matter how many processors.
+
+\begin{equation}
+T_p = (1/S)T_S + (1-1/S)T_S/P 
+\end{equation}
+P: number of processors. Tp: time to run the program. Ts: time required in a sequential machine.
+
+speedup: $T_S/T_P$, normally less than P.
