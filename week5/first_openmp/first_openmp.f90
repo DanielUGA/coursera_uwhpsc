@@ -1,8 +1,8 @@
 program first_openmp
+  use omp_lib   
   implicit none
   integer :: a
  
-  !use omp_lib   
 
   !$ print *, "Compiled with -fopenmp"
    

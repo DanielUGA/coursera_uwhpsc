@@ -51,3 +51,9 @@ T_p = (1/S)T_S + (1-1/S)T_S/P
 P: number of processors. Tp: time to run the program. Ts: time required in a sequential machine.
 
 speedup: $T_S/T_P$, normally less than P.
+
+omp critical: section is used to denote a section of parallel code that should only be executed by one thread at a time. 
+
+A "private clause" on an OpenMP directive is used to indicate variables that must be created for each thread as distinct memory locations.
+
+
